@@ -1,0 +1,29 @@
+clear all
+close all
+
+
+fileID=fopen('time_test.txt');
+formatSpec='%s %s %s %s %s %s %s %s %s %s %s %s';
+
+textout=textscan(fileID,formatSpec,Inf,'headerLines',3);
+
+labels=textout{1};
+
+times=textout{7};
+
+for i=1:length(times)
+    bob=times{i};
+    bob=str2double(bob(1:2))*60*60+str2double(bob(4:5))*60+str2double(bob(7:length(bob)));
+    times{i}=num2str(bob);
+end
+
+icarenums=str2double(times);
+
+counter=1;
+for i=2:2:length(icarenums)
+    diffarray(counter)=icarenums(i)-icarenums(i-1);
+    counter=counter+1;
+end
+
+meandiff=mean(diffarray);
+fclose('all');
